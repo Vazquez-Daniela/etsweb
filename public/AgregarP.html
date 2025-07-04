@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main_AP.css">
+</head>
+<body>
+    <header id="main-header"> 
+        <div class="logo">
+            <a href="Principal.html"> <img src="ima\Unisport.png" id="logo"></a>
+            <a href="Principal.html"> <img src="ima\titulo.png" id="titulo"></a>
+        </div>
+            <nav>
+                <a href="Ingresar.html"> <img src="ima\usuario.png" id="main-header-u"> </a>
+               <!-- <img src="ima\carrito.png" class="container-icon">
+                <div class="count-products">
+                        <span id="contador-productos"> 0</span>
+                      
+                </div>
+                <div class="container-cart-products
+                hidden-cart">
+                <div class="row-product">
+                    <div class="cart-product">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="icon-close"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                        <div class="info-cart-produc">
+                                <span class="cantidad-producto-carrito">1</span>
+                                <p class="titulo-proc-carrito"> Playera seleccion </p>
+                                <span class="precio-produc-carrito"> $1,599</span>
+                        </div>
+                         <img src="C:\Users\Agui1\Desktop\Proyecto_HTML\ima\cerrar.png" class="icon-closed">
+               
+                    </div>
+                </div> 
+                
+                        <div class="cart-total"> 
+                        <h3> Total: </h3>
+                        <span class="total-pagar">$3,000</span> 
+                        <a href="Compra.html"></a> <button class="comprar">Comprar</button>
+                     </div> cart-total
+
+                 </div>-->
+                </nav>
+       </header>
+     <!--Menu -->
+     <nav class="navegacion">
+        <ul class="menu">
+         <li> <a href="#"> Inicio </a></li>
+         <li> <a href="#"> Agregar Productos </a></li>
+         <li> <a href="#"> Productos Registrados</a></li>
+    </ul>
+ </nav>
+ <br>
+    <section class="agregarP">
+        <h3> Agregar Producto </h3>
+        <form action="/validar">
+            <div class="div1_AP">
+            <label> Nombre Producto: </label>
+            <input class="nom_d1" type="text" name="nombreP" id="nombreP"> 
+            <label> Precio: </label> 
+            <input class="con_d1" type="text" name="Precio" id="Precio"> 
+            <label>Cantidad: </label> 
+            <input class="con_d1" type="text" name="Cantidad" id="Cantidad"> 
+            </div>
+            <div class="div2_AP">
+            <label>Descripcion</label>
+            <input class="descrip_d" type="text" name="des" id="des"> <br>
+            <label>Proveedor</label>
+            <input class="div_d2" type="text" name="Proveedor" id="Proveedor"> <br> 
+            <label>Categoria</label>
+            <select name="usuario" id="usuario" class="div_d2">
+                <option value="mujer">Mujer</option>
+                <option value="hombre">Hombre</option>
+                <option value="ninos">Niños</option>
+            </select>
+        </div>
+
+        </form>
+        <br> <br>
+        <input class="botonAL" type="submit" value="Agregar">
+        <input class="botonAL" type="submit" value="Limpiar">
+
+    </section> 
+
+    
+</body>
+</html>

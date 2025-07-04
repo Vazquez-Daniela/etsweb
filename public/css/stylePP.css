@@ -1,0 +1,119 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+nav{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+}
+nav a{
+    color: #FFFF;
+    text-decoration: none;
+    display: inline-block;
+    animation: moverIz 1s ease-in;
+}
+
+header{
+    background: #4B79A1;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: auto;
+    padding: 48px;
+    width: 100%;
+}
+.container{
+    width: 95%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    justify-content: space-around;
+}
+
+img{
+    display: block;
+    height: 500px;
+    object-fit: cover;
+    width: auto;
+    animation: moverArriba 1s ease-in;
+}
+
+.textos{
+    width: 50%;
+    color: #FFFF;
+
+}
+.textos h1{
+    font-size: 80px;
+    animation: moverDe 1s ease-in;
+
+}
+.textos h2{
+    font-size: 30px;
+    animation: moverIz 1s ease-in;
+
+}
+
+.textos a{
+    display: inline-block;
+    color: #FFFF;
+    font-weight: 300;
+    text-decoration: none;
+    margin-top: 30px;
+    border: 1px solid #FFF;
+    width: 150px;
+    border-radius: 3px;
+    text-align: center;
+    padding: 10px 0;
+    animation: moverArriba 1s ease-in;
+   
+}
+.wave{
+    height: 100px;
+    width: 100%;
+    background: #4B79A1;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@keyframes moverIz {
+    0%{
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+@keyframes moverDe {
+    0%{
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+@keyframes moverArriba {
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
