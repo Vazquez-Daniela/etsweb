@@ -20,15 +20,7 @@
     });
 
     const data = await response.json();
-   const messageEl = document.getElementById("message");
+    alert(data.message);
 
-if (response.ok) {
-    messageEl.textContent = data.message;
-    messageEl.style.color = "green";
-    document.getElementById("signupForm").reset(); // limpia el formulario
-} else {
-    messageEl.textContent = data.error || "Ocurrió un error";
-    messageEl.style.color = "red";
-}
 
 

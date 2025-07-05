@@ -1,38 +1,31 @@
 /**
  * Conexion con mongodb
  */
-var express = require('express');
-var app = express(); //Contenedor de Endpoints o WS Restful
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
-
-const axios = require('axios');
-//Variables para conectar con MongoDB
+const express = require("express");
+const cors = require("cors");
 const { MongoClient } = require("mongodb");
-const mongoUri =  
-"mongodb+srv://dani:VNLlzT80Z16o1yi9@cluster0.114xfzo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const client = new MongoClient(mongoUri);
-const dbName = "pagweb";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const uri = "mongodb+srv://<usuario>:<contraseña>@cluster0.mongodb.net/?retryWrites=true&w=majority"; // cambia esto
+const client = new MongoClient(uri);
 let db;
 
-// Conectar a MongoDB
 async function conectarMongo() {
     try {
         await client.connect();
+        db = client.db("unisport"); // tu base de datos
         console.log("Conectado a MongoDB");
-        db = client.db(dbName);
-    } catch (err) {
-        console.error("Error conectando a MongoDB:", err);
+    } catch (error) {
+        console.error("Error al conectar con MongoDB", error);
     }
 }
 conectarMongo();
-
 /**
- * Guardar los datos de la pagina "Registro" a la base de datos
+ * Guardar datos del registro
  */
-
 app.post("/api/guardar", async (req, res) => {
     const { nombre, apelli, telefono, email, password, t_usuario } = req.body;
 
