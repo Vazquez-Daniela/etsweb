@@ -3,7 +3,6 @@
  */
 const express = require("express");
 const cors = require("cors");
-var express = require('express');
 var app = express(); //Contenedor de Endpoints o WS Restful
 
 app.use(express.json());
@@ -33,25 +32,34 @@ conectarMongo();
 /**
  * Guardar datos del registro
  */
-app.post("/api/guardar", async (req, res) => {
-    const { nombre, apelli, telefono, email, password, t_usuario } = req.body;
+app.post('/guardar', async (req, res) => {
+    const datos = {
+        nombre: req.body.name,
+        apellidos: req.body.apelli,
+        telefono: req.body.telefono,
+        email: req.body.email,
+        password: req.body.password,
+        tipo_usuario: req.body.t_usuario
+    };
 
     try {
-        await db.collection("usuarios").insertOne({
-            nombre,
-            apelli,
-            telefono,
-            email,
-            password,
-            t_usuario
-        });
+        const client = new MongoClient(mongoUri);
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('usuarios');
 
-        res.json({ message: "Usuario registrado correctamente" });
+        await collection.insertOne(datos);
+        client.close();
+
+        res.send('<h2>Datos guardados correctamente</h2><a href="/">Volver</a>');
     } catch (error) {
-        console.error("Error al insertar en MongoDB:", error);
-        res.status(500).json({ error: "Error al guardar en la base de datos" });
+        console.error('Error al guardar:', error);
+        res.status(500).send('Error al guardar en la base de datos.');
     }
 });
+/**
+ * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
+ */
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
