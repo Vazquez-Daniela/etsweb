@@ -50,7 +50,7 @@ app.post('/guardar', async (req, res) => {
 
         await collection.insertOne(datos);
         client.close();
-
+        /**Redireccionarlo a la pagina de login */
         res.send('<h2>Datos guardados correctamente</h2><a href="/">Volver</a>');
     } catch (error) {
         console.error('Error al guardar:', error);
@@ -60,6 +60,54 @@ app.post('/guardar', async (req, res) => {
 /**
  * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
  */
+/*
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const client = new MongoClient(mongoUri);
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('usuarios');
+
+        // Buscar usuario con email y contraseña
+        const usuario = await collection.findOne({ email, password });
+
+        if (!usuario) {
+            res.send('<h2>Credenciales incorrectas</h2><a href="/Ingresar.html">Intentar de nuevo</a>');
+        } else {
+            if (usuario.tipo_usuario === 'cliente') {
+                res.redirect('/Inicio.html');
+            } else if (usuario.tipo_usuario === 'vendedor') {
+                res.redirect('/vendedorI.html');
+            } else {
+                res.send('<h2>Tipo de usuario desconocido</h2>');
+            }
+        }
+
+        await client.close();
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).send('Error interno del servidor.');
+    }
+});
+*/
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const resultado = await db.collection('usuarios').findOne({ email, password });
+
+    if (resultado) {
+      res.json({ mensaje: 'Login exitoso', tipoUsuario: resultado.tipo });
+    } else {
+      res.status(401).json({ mensaje: 'Credenciales incorrectas' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error del servidor' });
+  }
+});
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
