@@ -92,6 +92,35 @@ app.post('/login', async (req, res) => {
     }
 });
 
+/**
+ * Agregar productos a la base de datos 
+ */
+app.post('/guardarP', async (req, res) => {
+    const datos = {
+        nombre: req.body.nameP,
+        precio: req.body.Precio,
+        cantidad: req.body.Cantidad,
+        des: req.body.des,
+        pro: req.body.Proveedor,
+        cat: req.body.categoria
+    };
+
+    try {
+        const client = new MongoClient(mongoUri);
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('productos');
+
+        await collection.insertOne(datos);
+        client.close();
+        /**Redireccionarlo a la pagina de login */
+        res.send('<h2>Producto guardado correctamente</h2><a href="/">Volver</a>');
+    } catch (error) {
+        console.error('Error al guardar:', error);
+        res.status(500).send('Error al guardar en la base de datos.');
+    }
+});
+
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
