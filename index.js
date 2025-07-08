@@ -96,28 +96,24 @@ app.post('/login', async (req, res) => {
  * Agregar productos a la base de datos 
  */
 app.post('/guardarP', async (req, res) => {
-    const datos = {
-        nombre: req.body.nameP,
-        precio: req.body.Precio,
-        cantidad: req.body.Cantidad,
-        des: req.body.des,
-        pro: req.body.Proveedor,
-        cat: req.body.categoria
-    };
+    const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
 
     try {
-        const client = new MongoClient(mongoUri);
-        await client.connect();
-        const db = client.db(dbName);
-        const collection = db.collection('productos');
+        const producto = {
+            nombre: nombreP,
+            precio: parseFloat(Precio),
+            cantidad: parseInt(Cantidad),
+            descripcion: des,
+            proveedor: Proveedor,
+            categoria
+        };
 
-        await collection.insertOne(datos);
-        client.close();
-        /**Redireccionarlo a la pagina de login */
-        res.send('<h2>Producto guardado correctamente</h2><a href="/">Volver</a>');
+        await db.collection('productos').insertOne(producto);
+
+        res.send('<h2>Producto agregado correctamente</h2><a href="/AgregarProducto.html">Volver</a>');
     } catch (error) {
-        console.error('Error al guardar:', error);
-        res.status(500).send('Error al guardar en la base de datos.');
+        console.error('Error al guardar el producto:', error);
+        res.status(500).send('Error al guardar el producto');
     }
 });
 
