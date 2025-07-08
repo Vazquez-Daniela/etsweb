@@ -60,7 +60,7 @@ app.post('/guardar', async (req, res) => {
 /**
  * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
  */
-/*
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -91,23 +91,7 @@ app.post('/login', async (req, res) => {
         res.status(500).send('Error interno del servidor.');
     }
 });
-*/
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
 
-  try {
-    const resultado = await db.collection('usuarios').findOne({ email, password });
-
-    if (resultado) {
-      res.json({ mensaje: 'Login exitoso', tipoUsuario: resultado.tipo });
-    } else {
-      res.status(401).json({ mensaje: 'Credenciales incorrectas' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: 'Error del servidor' });
-  }
-});
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
