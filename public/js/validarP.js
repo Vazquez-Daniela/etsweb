@@ -5,6 +5,7 @@
     const descripcion = document.getElementById('des').value.trim();
     const proveedor = document.getElementById('Proveedor').value.trim();
     const categoria = document.getElementById('categoria').value;
+    const imagen = document.getElementById('imagen').value.trim();
 
     // Validaciones
     if (!nombre || !precio || !cantidad || !descripcion || !proveedor || !categoria) {

@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const session = require('express-session');
 const axios = require('axios');
+const multer = require('multer');
+
 var app = express(); //Contenedor de Endpoints o WS Restful
 
 app.use(express.json());
@@ -129,7 +131,7 @@ app.post('/logout', (req, res) => {
  * Agregar productos a la base de datos 
  */
 app.post('/guardarP', async (req, res) => {
-    const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
+    const { nombreP, Precio, Cantidad, des, Proveedor, categoria, imagen } = req.body;
 
     try {
         const producto = {
@@ -138,7 +140,8 @@ app.post('/guardarP', async (req, res) => {
             cantidad: parseInt(Cantidad),
             descripcion: des,
             proveedor: Proveedor,
-            categoria
+            categoria: categoria,
+            imagen:imagen
         };
 
         await db.collection('productos').insertOne(producto);
@@ -150,6 +153,25 @@ app.post('/guardarP', async (req, res) => {
     }
 });
 
+/**
+ * LLenar la pagina automaticamente.
+ */
+app.get('/productos', async (req, res) => {
+  const categoria = req.query.categoria;
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection('productos');
+
+    const productos = await collection.find({ categoria }).toArray();
+    res.json(productos);
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
