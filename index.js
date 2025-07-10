@@ -124,7 +124,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-
 /**
  * Agregar productos a la base de datos 
  */
