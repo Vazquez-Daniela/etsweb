@@ -57,7 +57,7 @@ const datos = {
     }
 });
 /**
- * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
+ * Iniciar sesion 
  */
 
 // Middleware necesario ANTES de cualquier ruta que use req.session
