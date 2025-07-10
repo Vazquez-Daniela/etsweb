@@ -31,9 +31,12 @@
                     <label> Contraseña </label>
                     <input class="controles" type="password" name="password" required>
                     <p id="message" class="mensaje"></p> 
-                    <lavel>Tipo de usuario (cliente, vendedor)</lavel>
-                    <input class="controles" type="text" name="t_usuario" required>
-                    
+                    <lavel>Tipo de usuario</lavel>
+                    <!--<input class="controles" type="text" name="t_usuario" required>-->
+                      <select name="t_usuario" id="categoria"class="controles" required>
+                            <option value="cliente">Cliente</option>
+                            <option value="vendedor">Vendedor</option>
+                    </select>
                     <input class="botones" type="submit" value="Enviar">
                 </section>   
             </form>
