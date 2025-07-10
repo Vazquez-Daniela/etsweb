@@ -38,7 +38,7 @@ const datos = {
     apellidos: req.body.apelli,
     telefono: req.body.telefono,
     email: req.body.email,
-    password: req.body.password, // en texto plano
+    password: req.body.password, 
     tipo_usuario: req.body.t_usuario
 };
     try {
@@ -99,13 +99,12 @@ app.post('/login', async (req, res) => {
     const db = client.db(dbName);
     const collection = db.collection('usuarios');
 
-    // Buscar por email
     const usuario = await collection.findOne({ email });
 
     if (usuario) {
-      // Comparar contraseñas en texto plano
+    
       if (usuario.password === password) {
-        // Redirigir según tipo de usuario
+      
         if (usuario.tipo_usuario === 'cliente') {
           res.redirect('/Inicio.html');
         } else if (usuario.tipo_usuario === 'vendedor') {
