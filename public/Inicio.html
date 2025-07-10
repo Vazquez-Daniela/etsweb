@@ -21,9 +21,10 @@
               <nav>
                 <a href="#" id="usuario-nombre">
                  <img src="ima/usuario.png" id="main-header-u">
-                 <label id="nombre-usuario-label"></label> <!-- Aquí aparecerá el nombre -->
+                 <label id="nombre-usuario-label"></label>
                 </a>
-</nav>
+            </nav>
+
            </header>
       <!--MENU DE LA PAGINA --> 
       <nav class="navegacion">
@@ -155,16 +156,7 @@
         </div>
     </section>
         <!--Ver el nombre del usuario -->
-      <script>
-                fetch('/session-usuario')
-                 .then(res => res.json())
-                 .then(data => {
-             if (data.nombre) {
-                 const label = document.getElementById('nombre-usuario-label');
-                 label.textContent = data.nombre;
-                }
-            });
-        </script>
+      <script src="js/nameusu.js"></script>
 
     </body>
 

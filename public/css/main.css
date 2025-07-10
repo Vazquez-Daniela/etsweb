@@ -19,6 +19,22 @@
 	position: relative;
 	cursor: pointer;
 }
+#usuario-nombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: black;
+  font-family: Arial, sans-serif;
+}
+
+#nombre-usuario-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
 .tipo_u{
 	color: #000;
 	padding-top: 0%;
