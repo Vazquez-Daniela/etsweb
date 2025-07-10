@@ -1,15 +1,15 @@
-/**
- * Conexion con mongodb
- */
+
 const express = require("express");
 const cors = require("cors");
+const session = require('express-session');
+const axios = require('axios');
 var app = express(); //Contenedor de Endpoints o WS Restful
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-const axios = require('axios');
+
 //Variables para conectar con MongoDB
 const { MongoClient } = require("mongodb");
 const mongoUri =  
@@ -59,37 +59,14 @@ const datos = {
 /**
  * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
  */
-/*
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
 
-    try {
-        const client = new MongoClient(mongoUri);
-        await client.connect();
-        const db = client.db(dbName);
-        const collection = db.collection('usuarios');
+// Middleware necesario ANTES de cualquier ruta que use req.session
+app.use(session({
+  secret: 'clave-secreta', // pon algo más seguro en producción
+  resave: false,
+  saveUninitialized: true
+}));
 
-        // Buscar usuario con email y contraseña
-        const usuario = await collection.findOne({ email, password });
-
-        if (!usuario) {
-            res.send('<h2>Credenciales incorrectas</h2><a href="/Ingresar.html">Intentar de nuevo</a>');
-        } else {
-            if (usuario.tipo_usuario === 'cliente') {
-                res.redirect('/Inicio.html');
-            } else if (usuario.tipo_usuario === 'vendedor') {
-                res.redirect('/vendedorI.html');
-            } else {
-                res.send('<h2>Tipo de usuario desconocido</h2>');
-            }
-        }
-
-        await client.close();
-    } catch (error) {
-        console.error('Error en login:', error);
-        res.status(500).send('Error interno del servidor.');
-    }
-});*/
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
