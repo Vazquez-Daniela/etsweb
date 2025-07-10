@@ -33,16 +33,12 @@ conectarMongo();
  * Guardar datos del registro
  */
 app.post('/guardar', async (req, res) => {
-const bcrypt = require('bcrypt');
-
-const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
 const datos = {
     nombre: req.body.name,
     apellidos: req.body.apelli,
     telefono: req.body.telefono,
     email: req.body.email,
-    password: hashedPassword,
+    password: req.body.password, // en texto plano
     tipo_usuario: req.body.t_usuario
 };
     try {
@@ -103,11 +99,13 @@ app.post('/login', async (req, res) => {
     const db = client.db(dbName);
     const collection = db.collection('usuarios');
 
+    // Buscar por email
     const usuario = await collection.findOne({ email });
 
     if (usuario) {
+      // Comparar contraseñas en texto plano
       if (usuario.password === password) {
-        // Redirigir según tipo_usuario
+        // Redirigir según tipo de usuario
         if (usuario.tipo_usuario === 'cliente') {
           res.redirect('/Inicio.html');
         } else if (usuario.tipo_usuario === 'vendedor') {
@@ -116,7 +114,7 @@ app.post('/login', async (req, res) => {
           res.send('Tipo de usuario no reconocido');
         }
       } else {
-        res.send('Credenciales incorrectas: contraseña no coincide');
+        res.send('Credenciales incorrectas: contraseña no válida');
       }
     } else {
       res.send('Credenciales incorrectas: usuario no encontrado');
@@ -126,6 +124,7 @@ app.post('/login', async (req, res) => {
     res.status(500).send('Error del servidor');
   }
 });
+
 
 /**
  * Agregar productos a la base de datos 
