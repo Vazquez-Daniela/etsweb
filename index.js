@@ -104,14 +104,14 @@ app.post('/login', async (req, res) => {
 /**
  * Ver el nombre del usuario, una vez que inicia session.
  */
-app.get('/Inicio.html', (req, res) => {
-  if (!req.session.usuario) {
-    return res.redirect('/Ingresar.html');
+app.get('/session-usuario', (req, res) => {
+  if (req.session && req.session.usuario) {
+    res.json({ nombre: req.session.usuario.nombre });
+  } else {
+    res.json({});
   }
-
-  // Enviar archivo con el nombre de usuario insertado con JS
-  res.sendFile(__dirname + '/public/Inicio.html');
 });
+
 
 /**
  * Agregar productos a la base de datos 
