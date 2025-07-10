@@ -33,15 +33,18 @@ conectarMongo();
  * Guardar datos del registro
  */
 app.post('/guardar', async (req, res) => {
-    const datos = {
-        nombre: req.body.name,
-        apellidos: req.body.apelli,
-        telefono: req.body.telefono,
-        email: req.body.email,
-        password: req.body.password,
-        tipo_usuario: req.body.t_usuario
-    };
+const bcrypt = require('bcrypt');
 
+const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+const datos = {
+    nombre: req.body.name,
+    apellidos: req.body.apelli,
+    telefono: req.body.telefono,
+    email: req.body.email,
+    password: hashedPassword,
+    tipo_usuario: req.body.t_usuario
+};
     try {
         const client = new MongoClient(mongoUri);
         await client.connect();
@@ -51,7 +54,7 @@ app.post('/guardar', async (req, res) => {
         await collection.insertOne(datos);
         client.close();
         /**Redireccionarlo a la pagina de login */
-        res.send('<h2>Datos guardados correctamente</h2><a href="/">Volver</a>');
+       res.redirect('/Ingresar.html');
     } catch (error) {
         console.error('Error al guardar:', error);
         res.status(500).send('Error al guardar en la base de datos.');
@@ -60,7 +63,7 @@ app.post('/guardar', async (req, res) => {
 /**
  * Verificacion del registro, Usuario ingrese a la pagina dependiendo de su tipo de usuario 
  */
-
+/*
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -90,6 +93,38 @@ app.post('/login', async (req, res) => {
         console.error('Error en login:', error);
         res.status(500).send('Error interno del servidor.');
     }
+});*/
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection('usuarios');
+
+    const usuario = await collection.findOne({ email });
+
+    if (usuario) {
+      if (usuario.password === password) {
+        // Redirigir según tipo_usuario
+        if (usuario.tipo_usuario === 'cliente') {
+          res.redirect('/Inicio.html');
+        } else if (usuario.tipo_usuario === 'vendedor') {
+          res.redirect('/vendedorI.html');
+        } else {
+          res.send('Tipo de usuario no reconocido');
+        }
+      } else {
+        res.send('Credenciales incorrectas: contraseña no coincide');
+      }
+    } else {
+      res.send('Credenciales incorrectas: usuario no encontrado');
+    }
+  } catch (error) {
+    console.error('Error al conectar con MongoDB', error);
+    res.status(500).send('Error del servidor');
+  }
 });
 
 /**
