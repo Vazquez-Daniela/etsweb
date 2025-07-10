@@ -101,27 +101,39 @@ app.post('/login', async (req, res) => {
 
     const usuario = await collection.findOne({ email });
 
-    if (usuario) {
-    
-      if (usuario.password === password) {
-      
-        if (usuario.tipo_usuario === 'cliente') {
-          res.redirect('/Inicio.html');
-        } else if (usuario.tipo_usuario === 'vendedor') {
-          res.redirect('/vendedorI.html');
-        } else {
-          res.send('Tipo de usuario no reconocido');
-        }
+    if (usuario && usuario.password === password) {
+      // Guardar en sesión
+      req.session.usuario = {
+        email: usuario.email,
+        nombre: usuario.nombre,
+        tipo: usuario.tipo_usuario
+      };
+
+      if (usuario.tipo_usuario === 'cliente') {
+        res.redirect('/Inicio.html');
+      } else if (usuario.tipo_usuario === 'vendedor') {
+        res.redirect('/vendedorI.html');
       } else {
-        res.send('Credenciales incorrectas: contraseña no válida');
+        res.send('Tipo de usuario no reconocido');
       }
     } else {
-      res.send('Credenciales incorrectas: usuario no encontrado');
+      res.send('Credenciales incorrectas');
     }
   } catch (error) {
-    console.error('Error al conectar con MongoDB', error);
+    console.error('Error en login', error);
     res.status(500).send('Error del servidor');
   }
+});
+/**
+ * Ver el nombre del usuario, una vez que inicia session.
+ */
+app.get('/Inicio.html', (req, res) => {
+  if (!req.session.usuario) {
+    return res.redirect('/Ingresar.html');
+  }
+
+  // Enviar archivo con el nombre de usuario insertado con JS
+  res.sendFile(__dirname + '/public/Inicio.html');
 });
 
 /**

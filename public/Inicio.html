@@ -18,9 +18,9 @@
                 <a href="/public/index.html"> <img src="ima\Unisport.png" id="logo"></a>
                 <a href="/public/index.html"> <img src="ima\titulo.png" id="titulo"></a>
             </div>
-                <nav>
-                    <a href="Ingresar.html"> <img src="ima\usuario.png" id="main-header-u"> </a>
-                    </nav>
+               <nav>
+                     <a href="#" id="usuario-nombre"> <img src="ima/usuario.png" id="main-header-u"> </a>
+                </nav>
            </header>
       <!--MENU DE LA PAGINA --> 
       <nav class="navegacion">
@@ -151,6 +151,18 @@
             </div>
         </div>
     </section>
+        <!--Ver el nombre del usuario -->
+        <script>
+             // Cargar el nombre del usuario desde el servidor
+             fetch('/session-usuario')
+                .then(res => res.json())
+                .then(data => {
+                 if (data.nombre) {
+                     const userLink = document.getElementById('usuario-nombre');
+                     userLink.innerHTML = `<img src="ima/usuario.png" id="main-header-u"> ${data.nombre}`;
+                 }
+            });
+        </script>
     </body>
 
 
