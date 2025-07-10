@@ -112,7 +112,19 @@ app.get('/session-usuario', (req, res) => {
   }
 });
 
-
+/**
+ * Cerrar sesion del usuario 
+ */
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      return res.status(500).send('Error al cerrar sesión');
+    }
+    res.clearCookie('connect.sid');
+    res.sendStatus(200); // OK
+  });
+});
 /**
  * Agregar productos a la base de datos 
  */

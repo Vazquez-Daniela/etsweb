@@ -11,30 +11,70 @@
 	justify-content: space-between; /*separar elementos yq ue esten es esquinas opuestas*/
 		
 }
-#main-header-u{
+/*#main-header-u{
 	width: 40px;
 	height: 40px;
 	padding-right: 20px;
 	padding-top: 10px;
 	position: relative;
 	cursor: pointer;
+}*/
+.usuario-nav {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
 }
-#usuario-nombre {
-	padding-right: 10px;
+
+.usuario-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.usuario-menu a {
   display: flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
   color: black;
-  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+#main-header-u {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 #nombre-usuario-label {
-  
-	font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  cursor: pointer;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 5px 0;
   margin: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submenu li {
+  padding: 8px 20px;
+}
+
+.submenu li a {
+  color: black;
+  text-decoration: none;
+}
+
+.usuario-menu:hover .submenu {
+  display: block;
 }
 
 .tipo_u{
