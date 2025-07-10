@@ -20,6 +20,7 @@
 	cursor: pointer;
 }
 #usuario-nombre {
+	padding-right: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -29,7 +30,8 @@
 }
 
 #nombre-usuario-label {
-  font-size: 14px;
+  
+	font-size: 16px;
   font-weight: bold;
   color: #333;
   margin: 0;
