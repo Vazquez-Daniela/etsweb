@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 //Variables para conectar con MongoDB
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId, Binary } = require('mongodb');
 const mongoUri =  
 "mongodb+srv://dani:VNLlzT80Z16o1yi9@cluster0.114xfzo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(mongoUri);
