@@ -5,7 +5,7 @@ const session = require('express-session');
 const axios = require('axios');
 const multer = require('multer');
 const path = require('path');
-
+const fs = require('fs');
 
 var app = express(); //Contenedor de Endpoints o WS Restful
 
@@ -132,9 +132,10 @@ app.post('/logout', (req, res) => {
 /**
  * Agregar productos a la base de datos 
  */
+// Configurar almacenamiento de imagenes con multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/ima/productos');
+    cb(null, 'public/ima/productos'); // Asegúrate que esta carpeta exista
   },
   filename: function (req, file, cb) {
     const nombreArchivo = Date.now() + path.extname(file.originalname);
@@ -143,9 +144,22 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public')); // Para servir imágenes si lo necesitas
+
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
   const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
-  const imagen = req.file ? `/ima/productos/${req.file.filename}` : '';
+
+  let imagenData = null;
+
+  if (req.file) {
+    const buffer = fs.readFileSync(req.file.path);
+    imagenData = {
+      datos: new Binary(buffer),
+      tipo: req.file.mimetype,
+      nombre: req.file.originalname
+    };
+  }
 
   const producto = {
     nombre: nombreP,
@@ -154,7 +168,7 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     descripcion: des,
     proveedor: Proveedor,
     categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
-    imagen: imagen
+    imagen: imagenData
   };
 
   try {
@@ -162,14 +176,18 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
     await db.collection('productos').insertOne(producto);
-    client.close();
+    await client.close();
 
-    res.status(200).send('Guardado correctamente');
+    // Opcional: borrar archivo físico si no lo necesitas
+    //fs.unlinkSync(req.file.path);
+
+    res.status(200).send('Producto guardado correctamente');
   } catch (error) {
     console.error('Error al guardar el producto:', error);
     res.status(500).send('Error al guardar');
   }
 });
+
 /**
  * LLenar la pagina automaticamente.
  */
