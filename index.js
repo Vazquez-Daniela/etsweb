@@ -4,6 +4,8 @@ const cors = require("cors");
 const session = require('express-session');
 const axios = require('axios');
 const multer = require('multer');
+const path = require('path');
+
 
 var app = express(); //Contenedor de Endpoints o WS Restful
 
