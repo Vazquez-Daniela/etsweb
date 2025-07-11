@@ -191,20 +191,19 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
 /**
  * LLenar la pagina automaticamente.
  */
-app.get('/productos', async (req, res) => {
-  const categoria = req.query.categoria;
-
+app.get('/productos/kids', async (req, res) => {
   try {
     const client = new MongoClient(mongoUri);
     await client.connect();
     const db = client.db(dbName);
-    const collection = db.collection('productos');
 
-    const productos = await collection.find({ categoria }).toArray();
+    const productos = await db.collection('productos').find({ categoria: "Kids" }).toArray();
+    await client.close();
+
     res.json(productos);
   } catch (error) {
-    console.error('Error al obtener productos:', error);
-    res.status(500).send('Error en el servidor');
+    console.error('Error al cargar productos Kids:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
   }
 });
 

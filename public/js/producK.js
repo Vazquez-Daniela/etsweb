@@ -1,25 +1,25 @@
+document.addEventListener('DOMContentLoaded', async () => {
+  const contenedor = document.getElementById('contenedor-productos');
 
-  fetch('/productos?categoria=Kids')
-    .then(res => res.json())
-    .then(productos => {
-      const contenedor = document.getElementById('contenedor-productos');
-      contenedor.innerHTML = '';
+  try {
+    const respuesta = await fetch('/productos/kids');
+    const productos = await respuesta.json();
 
-      productos.forEach(producto => {
-        const div = document.createElement('div');
-        div.className = 'item';
+    productos.forEach(prod => {
+      const item = document.createElement('div');
+      item.classList.add('item');
 
-        div.innerHTML = `
-          <span class="titulo-item">${producto.nombre}</span>
-          <img src="${producto.imagen}" alt="" class="img-item">
-          <span class="precio-item">$${producto.precio}</span>
-          <button class="boton-item">Agregar al Carrito</button>
-        `;
+      item.innerHTML = `
+        <span class="titulo-item">${prod.nombre}</span>
+        <img src="/imagen/${prod._id}" alt="${prod.nombre}" class="img-item">
+        <span class="precio-item">$${prod.precio.toFixed(2)}</span>
+        <button class="boton-item">Agregar al Carrito</button>
+      `;
 
-        contenedor.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error('Error cargando productos:', err);
+      contenedor.appendChild(item);
     });
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+  }
+});
 
