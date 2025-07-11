@@ -1,5 +1,5 @@
 
-  fetch('/productos?categoria=kids')
+  fetch('/productos?categoria=Kids')
     .then(res => res.json())
     .then(productos => {
       const contenedor = document.getElementById('contenedor-productos');
