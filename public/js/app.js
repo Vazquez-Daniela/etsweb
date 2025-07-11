@@ -32,11 +32,16 @@ function ready(){
     }
 
     //Agregamos funcionalidad al boton Agregar al carrito
-    var botonesAgregarAlCarrito = document.getElementsByClassName('boton-item');
+    document.getElementById('contenedor-productos').addEventListener('click', function (e) {
+    if (e.target.classList.contains('boton-item')) {
+        agregarAlCarritoClicked(e);
+    }
+});
+    /*var botonesAgregarAlCarrito = document.getElementsByClassName('boton-item');
     for(var i=0; i<botonesAgregarAlCarrito.length;i++){
         var button = botonesAgregarAlCarrito[i];
         button.addEventListener('click', agregarAlCarritoClicked);
-    }
+    }*/
 
     //Agregamos funcionalidad al botón comprar
     document.getElementsByClassName('btn-pagar')[0].addEventListener('click',pagarClicked)
@@ -80,7 +85,7 @@ function hacerVisibleCarrito(){
 //Funciòn que agrega un item al carrito
 function agregarItemAlCarrito(titulo, precio, imagenSrc){
     var item = document.createElement('div');
-    item.classList.add = ('item');
+    item.classList.add('item');
     var itemsCarrito = document.getElementsByClassName('carrito-items')[0];
 
     //controlamos que el item que intenta ingresar no se encuentre en el carrito
