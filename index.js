@@ -187,7 +187,28 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     res.status(500).send('Error al guardar');
   }
 });
+/**
+ * buscar la imagen 
+ */
+app.get('/imagen/:id', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    const producto = await db.collection('productos').findOne({ _id: new ObjectId(req.params.id) });
+    await client.close();
 
+    if (!producto || !producto.imagen || !producto.imagen.datos) {
+      return res.status(404).send('Imagen no encontrada');
+    }
+
+    res.contentType(producto.imagen.tipo);
+    res.send(producto.imagen.datos.buffer);
+  } catch (error) {
+    console.error('Error al obtener imagen:', error);
+    res.status(500).send('Error al cargar imagen');
+  }
+});
 /**
  * LLenar la pagina automaticamente de Kids
  */
