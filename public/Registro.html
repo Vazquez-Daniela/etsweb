@@ -9,10 +9,6 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-          <!-- Div para mostrar el mensaje de usuario registrado  -->
-    <div id="mensajeRegistro" style="display: none; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px; text-align: center;">
-        ¡Usuario registrado exitosamente!
-    </div>
        <header id="main-header"> 
             <div class="logo">
                 <a href="/public/index.html"> <img src="ima\Unisport.png" id="logo"></a>
@@ -45,19 +41,6 @@
                 </section>   
             </form>
             <script  src="js/ingresar.js"></script> 
-             <script>
-                    const params = new URLSearchParams(window.location.search);
-                    if (params.get('registro') === 'exitoso') {
-                      const mensajeDiv = document.getElementById('mensajeRegistro');
-                     mensajeDiv.style.display = 'block';
-
-                         // Espera 3 segundos, luego oculta el mensaje y redirecciona limpiando la URL
-                     setTimeout(() => {
-                          mensajeDiv.style.display = 'none';
-                         window.location.href = 'Ingresar.html';  // Redirige sin parámetros
-                 }, 3000);
-        }
-    </script>
 
     </body>
    
