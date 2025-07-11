@@ -1,23 +1,24 @@
-  fetch('/productos?categoria=Hombre')
-    .then(res => res.json())
-    .then(productos => {
-      const contenedor = document.getElementById('contenedor-productos');
-      contenedor.innerHTML = '';
+document.addEventListener('DOMContentLoaded', async () => {
+  const contenedor = document.getElementById('contenedor-productos');
 
-      productos.forEach(producto => {
-        const div = document.createElement('div');
-        div.className = 'item';
+  try {
+    const respuesta = await fetch('/productos/hombre');
+    const productos = await respuesta.json();
 
-        div.innerHTML = `
-          <span class="titulo-item">${producto.nombre}</span>
-          <img src="${producto.imagen}" alt="" class="img-item">
-          <span class="precio-item">$${producto.precio}</span>
-          <button class="boton-item">Agregar al Carrito</button>
-        `;
+    productos.forEach(prod => {
+      const item = document.createElement('div');
+      item.classList.add('item');
 
-        contenedor.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error('Error cargando productos:', err);
+      item.innerHTML = `
+        <span class="titulo-item">${prod.nombre}</span>
+        <img src="/imagen/${prod._id.$oid || prod._id}" alt="${prod.nombre}" class="img-item">
+        <span class="precio-item">$${prod.precio.toFixed(2)}</span>
+        <button class="boton-item">Agregar al Carrito</button>
+      `;
+
+      contenedor.appendChild(item);
     });
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+  }
+});

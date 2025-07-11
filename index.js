@@ -227,7 +227,42 @@ app.get('/productos/kids', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 });
+/**
+ * LLenar la pagina automaticamente de Hombre
+ */
+app.get('/productos/hombre', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
 
+    const productos = await db.collection('productos').find({ categoria: "Hombre" }).toArray();
+    await client.close();
+
+    res.json(productos);
+  } catch (error) {
+    console.error('Error al cargar productos Kids:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
+});
+/**
+ * LLenar la pagina automaticamente de Mujer
+ */
+app.get('/productos/mujer', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+
+    const productos = await db.collection('productos').find({ categoria: "Mujer" }).toArray();
+    await client.close();
+
+    res.json(productos);
+  } catch (error) {
+    console.error('Error al cargar productos Kids:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
+});
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
 });
