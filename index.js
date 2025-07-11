@@ -130,7 +130,9 @@ app.post('/logout', (req, res) => {
   });
 });
 /**
- * Agregar productos a la base de datos 
+ * 
+ * Funciones para hacer que se vea la informacion de los productos 
+ * 
  */
 // Configurar almacenamiento de imagenes con multer
 const storage = multer.diskStorage({
@@ -187,9 +189,7 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     res.status(500).send('Error al guardar');
   }
 });
-/**
- * buscar la imagen 
- */
+
 app.get('/imagen/:id', async (req, res) => {
   try {
     const client = new MongoClient(mongoUri);
