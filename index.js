@@ -189,7 +189,7 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
 });
 
 /**
- * LLenar la pagina automaticamente.
+ * LLenar la pagina automaticamente de Kids
  */
 app.get('/productos/kids', async (req, res) => {
   try {
