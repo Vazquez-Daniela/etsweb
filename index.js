@@ -263,6 +263,9 @@ app.get('/productos/mujer', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 });
+
+
+
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
 });
