@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       item.innerHTML = `
         <span class="titulo-item">${prod.nombre}</span>
-        <img src="/imagen/${prod._id}" alt="${prod.nombre}" class="img-item">
+        <img src="/imagen/${prod._id.$oid || prod._id}" alt="${prod.nombre}" class="img-item">
         <span class="precio-item">$${prod.precio.toFixed(2)}</span>
         <button class="boton-item">Agregar al Carrito</button>
       `;
