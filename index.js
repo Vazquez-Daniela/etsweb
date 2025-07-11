@@ -130,29 +130,44 @@ app.post('/logout', (req, res) => {
 /**
  * Agregar productos a la base de datos 
  */
-app.post('/guardarP', async (req, res) => {
-    const { nombreP, Precio, Cantidad, des, Proveedor, categoria, imagen } = req.body;
-
-    try {
-        const producto = {
-            nombre: nombreP,
-            precio: parseFloat(Precio),
-            cantidad: parseInt(Cantidad),
-            descripcion: des,
-            proveedor: Proveedor,
-            categoria: categoria,
-            imagen:imagen
-        };
-
-        await db.collection('productos').insertOne(producto);
-
-        res.send('<h2>Producto agregado correctamente</h2><a href="/AgregarProducto.html">Volver</a>');
-    } catch (error) {
-        console.error('Error al guardar el producto:', error);
-        res.status(500).send('Error al guardar el producto');
-    }
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/ima/productos');
+  },
+  filename: function (req, file, cb) {
+    const nombreArchivo = Date.now() + path.extname(file.originalname);
+    cb(null, nombreArchivo);
+  }
 });
+const upload = multer({ storage });
 
+app.post('/guardarP', upload.single('imagen'), async (req, res) => {
+  const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
+  const imagen = req.file ? `/ima/productos/${req.file.filename}` : '';
+
+  const producto = {
+    nombre: nombreP,
+    precio: parseFloat(Precio),
+    cantidad: parseInt(Cantidad),
+    descripcion: des,
+    proveedor: Proveedor,
+    categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
+    imagen: imagen
+  };
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    await db.collection('productos').insertOne(producto);
+    client.close();
+
+    res.status(200).send('Guardado correctamente');
+  } catch (error) {
+    console.error('Error al guardar el producto:', error);
+    res.status(500).send('Error al guardar');
+  }
+});
 /**
  * LLenar la pagina automaticamente.
  */
