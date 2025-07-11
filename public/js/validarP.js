@@ -8,7 +8,7 @@
     const imagen = document.getElementById('imagen').files[0];
 
     // Validaciones
-    if (!nombre || !precio || !cantidad || !descripcion || !proveedor || !categoria) {
+    if (!nombre || !precio || !cantidad || !descripcion || !proveedor || !categoria || !imagen) {
         alert('Todos los campos son obligatorios.');
         e.preventDefault();
         return;
