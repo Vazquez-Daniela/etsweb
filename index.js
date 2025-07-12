@@ -219,7 +219,8 @@ app.get('/productos/todos', async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    const productos = await db.collection('productos').toArray();
+    const productos = await db.collection('productos').find({}).toArray();
+
     await client.close();
 
     res.json(productos);
