@@ -153,7 +153,8 @@ app.use(express.static('public')); // Para servir imágenes si lo necesitas
 
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
   const { nombreP, Precio, Cantidad, des, vendedor, categoria } = req.body;
-  console.log("Proveedor recibido:", vendedor);
+  
+  console.log("Proveedor recibido:", vendedor); //No se recibe el nombre del proveedor
   let imagenData = null;
 
   if (req.file) {
