@@ -20,7 +20,7 @@
     });
 
     const data = await response.json();
-    alert("Usuario registrado con exito!");
+    
 
 
 

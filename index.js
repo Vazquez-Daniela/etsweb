@@ -54,6 +54,7 @@ const datos = {
         await collection.insertOne(datos);
         client.close();
         /**Redireccionarlo a la pagina de login */
+       alert("Usuario registrado con exito!");
        res.redirect('/Ingresar.html');
     } catch (error) {
         console.error('Error al guardar:', error);
