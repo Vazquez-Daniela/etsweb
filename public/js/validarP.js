@@ -6,12 +6,12 @@
     const precio = document.getElementById('Precio').value.trim();
     const cantidad = document.getElementById('Cantidad').value.trim();
     const descripcion = document.getElementById('des').value.trim();
-    const proveedor = document.getElementById('Proveedor').value.trim();
+   const vendedor = localStorage.getItem('usuario');
     const categoria = document.getElementById('categoria').value;
     const imagen = document.getElementById('imagen').files[0];
 
     // Validaciones
-    if (!nombre || !precio || !cantidad || !descripcion || !proveedor || !categoria || !imagen) {
+    if (!nombre || !precio || !cantidad || !descripcion || !vendedor || !categoria || !imagen) {
       alert('Todos los campos son obligatorios.');
       return;
     }
@@ -32,7 +32,7 @@
     formData.append('Precio', precio);
     formData.append('Cantidad', cantidad);
     formData.append('des', descripcion);
-    formData.append('Proveedor', proveedor);
+    formData.append('Vendedor', vendedor);
     formData.append('categoria', categoria);
     formData.append('imagen', imagen);
 
