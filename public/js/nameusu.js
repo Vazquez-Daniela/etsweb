@@ -8,9 +8,9 @@ fetch('/session-usuario')
   .then(data => {
     console.log("🔍 Respuesta del servidor:", data);
     if (data.nombre) {
-      document.getElementById('nombre-usuario-label').textContent = data.nombre;
       localStorage.setItem('usuario', data.nombre);
       console.log("Usuario guardado en localStorage:", data.nombre);
+       document.getElementById('nombre-usuario-label').textContent = data.nombre;
     } else {
       console.warn("No se recibió un nombre desde sesión.");
     }
