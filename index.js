@@ -151,7 +151,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public')); // Para servir imágenes si lo necesitas
 
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
-  const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
+  const { nombreP, Precio, Cantidad, /*des,*/ usuario, categoria } = req.body;
 
   let imagenData = null;
 
@@ -168,8 +168,8 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     nombre: nombreP,
     precio: parseFloat(Precio),
     cantidad: parseInt(Cantidad),
-    descripcion: des,
-    proveedor: Proveedor,
+    //descripcion: des,
+    usuario: usuario,
     categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
     imagen: imagenData
   };
