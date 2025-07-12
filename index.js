@@ -211,6 +211,24 @@ app.get('/imagen/:id', async (req, res) => {
   }
 });
 /**
+ * LLenar la pagina inicio 
+ */
+app.get('/productos/todos', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+
+    const productos = await db.collection('productos').toArray();
+    await client.close();
+
+    res.json(productos);
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
+});
+/**
  * LLenar la pagina automaticamente de Kids
  */
 app.get('/productos/kids', async (req, res) => {
