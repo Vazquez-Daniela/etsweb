@@ -111,7 +111,7 @@ app.post('/login', async (req, res) => {
  */
 app.get('/session-usuario', (req, res) => {
  if (req.session && req.session.usuario) {
-    console.log("usuario:", req.session.usuario.nombre); 
+    //console.log("usuario:", req.session.usuario.nombre); 
     res.json({ nombre: req.session.usuario.nombre });
   } else {
     res.json({});
