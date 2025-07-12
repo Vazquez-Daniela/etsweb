@@ -112,6 +112,7 @@ app.post('/login', async (req, res) => {
 app.get('/session-usuario', (req, res) => {
   if (req.session && req.session.usuario) {
     res.json({ nombre: req.session.usuario.nombre });
+    console.log("usuario:", req.session.usuario.nombre); //Se ve el nombre de quien ingreso 
   } else {
     res.json({});
   }
@@ -151,8 +152,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public')); // Para servir imágenes si lo necesitas
 
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
-  const { nombreP, Precio, Cantidad, /*des,*/ usuario, categoria } = req.body;
-
+  const { nombreP, Precio, Cantidad, des, vendedor, categoria } = req.body;
+  console.log("Proveedor recibido:", vendedor);
   let imagenData = null;
 
   if (req.file) {
@@ -168,8 +169,8 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     nombre: nombreP,
     precio: parseFloat(Precio),
     cantidad: parseInt(Cantidad),
-    //descripcion: des,
-    usuario: usuario,
+    descripcion: des,
+    usuario: vendedor,
     categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
     imagen: imagenData
   };

@@ -1,13 +1,12 @@
 
   // Mostrar nombre del usuario
- etch('/session-usuario')
+  fetch('/session-usuario')
     .then(res => res.json())
     .then(data => {
       if (data.nombre) {
-        localStorage.setItem('usuario', data.nombre);
         document.getElementById('nombre-usuario-label').textContent = data.nombre;
-      } else {
-        console.log('No hay sesión activa');
+        localStorage.setItem('usuario', data.nombre);
+        console.log("usuario guardado en localStorage: ",data.nombre);
       }
     });
 
