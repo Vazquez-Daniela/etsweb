@@ -110,9 +110,9 @@ app.post('/login', async (req, res) => {
  * Ver el nombre del usuario, una vez que inicia session.
  */
 app.get('/session-usuario', (req, res) => {
-  if (req.session && req.session.usuario) {
+ if (req.session && req.session.usuario) {
+    console.log("usuario:", req.session.usuario.nombre); 
     res.json({ nombre: req.session.usuario.nombre });
-    console.log("usuario:", req.session.usuario.nombre); //Se ve el nombre de quien ingreso 
   } else {
     res.json({});
   }
