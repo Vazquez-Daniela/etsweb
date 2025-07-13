@@ -11,6 +11,7 @@
   const imagen = document.getElementById('imagen').files[0];
 
   const proveedor = localStorage.getItem('Proveedor');
+
     if (!proveedor) {
     alert('No se detectó el usuario autenticado.');
     e.preventDefault();
@@ -52,6 +53,8 @@
     if (response.ok) {
       alert('Producto guardado correctamente.');
       this.reset(); // Limpiar el formulario
+      return;
+      
     } else {
       alert('Error al guardar el producto.');
     }

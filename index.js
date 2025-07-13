@@ -152,9 +152,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public')); // Para servir imágenes si lo necesitas
 
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
-  const { nombreP, Precio, Cantidad, des, vendedor, categoria } = req.body;
-  
-  console.log("Proveedor recibido:", vendedor); //No se recibe el nombre del proveedor
+  const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
+
+  // Logs para depuración
+  console.log("Datos del formulario recibidos:", req.body);
+  console.log("Proveedor recibido:", Proveedor);
+
+  // Validar campos obligatorios
+  if (!nombreP || !Precio || !Cantidad || !des || !Proveedor || !categoria) {
+    return res.status(400).send("Todos los campos son obligatorios.");
+  }
+
   let imagenData = null;
 
   if (req.file) {
@@ -171,7 +179,7 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     precio: parseFloat(Precio),
     cantidad: parseInt(Cantidad),
     descripcion: des,
-    usuario: vendedor,
+    proveedor: Proveedor,  // Asegúrate que la clave es Proveedor, no proveedor
     categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
     imagen: imagenData
   };
@@ -183,13 +191,11 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     await db.collection('productos').insertOne(producto);
     await client.close();
 
-    // Opcional: borrar archivo físico si no lo necesitas
-    //fs.unlinkSync(req.file.path);
-
-    res.status(200).send('Producto guardado correctamente');
+    console.log("Producto guardado con éxito en MongoDB.");
+    res.status(200).send("Producto guardado correctamente");
   } catch (error) {
-    console.error('Error al guardar el producto:', error);
-    res.status(500).send('Error al guardar');
+    console.error("Error al guardar el producto:", error);
+    res.status(500).send("Error al guardar el producto.");
   }
 });
 
