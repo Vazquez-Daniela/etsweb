@@ -8,10 +8,10 @@
     }
   });
 
-     document.getElementById('formProducto').addEventListener('submit', () => {
+   /*  document.getElementById('formProducto').addEventListener('submit', () => {
       const usuario = localStorage.getItem('usuario');
       if (usuario) {
         document.getElementById('Proveedor').value = usuario;
         console.log("✅ Proveedor insertado al enviar:", usuario);
       }
-    });
+    });*/
