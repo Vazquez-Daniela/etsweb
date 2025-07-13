@@ -11,7 +11,12 @@
   const imagen = document.getElementById('imagen').files[0];
 
   const proveedor = localStorage.getItem('Proveedor');
-
+    if (!proveedor) {
+    alert('No se detectó el usuario autenticado.');
+    e.preventDefault();
+    return;
+  }
+  document.getElementById('Proveedor').value = proveedor;
   // Validaciones
   if (!nombre || !precio || !cantidad || !descripcion || !proveedor || !categoria || !imagen) {
     alert('Todos los campos son obligatorios.');
