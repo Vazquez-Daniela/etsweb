@@ -192,7 +192,13 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     await client.close();
 
     console.log("Producto guardado con éxito en MongoDB.");
-    res.status(200).send("Producto guardado correctamente");
+        res.send(`
+      <script>
+        alert('Producto registrado correctamente');
+        window.location.href = '/AgregarP.html';
+      </script>
+    `);
+
   } catch (error) {
     console.error("Error al guardar el producto:", error);
     res.status(500).send("Error al guardar el producto.");
