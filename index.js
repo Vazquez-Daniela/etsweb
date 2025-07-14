@@ -415,7 +415,9 @@ app.post('/guardar-compra', async (req, res) => {
     res.status(500).send("Error al procesar la compra");
   }
 });
-
+/**
+ * SERVIDOR ESCUCHANDO
+ */
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
 });

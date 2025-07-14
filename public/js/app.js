@@ -21,7 +21,7 @@ function ready() {
 }
 
 function pagarClicked() {
-  alert("Gracias por la compra");
+  //alert("Gracias por la compra");
   const carritoItems = document.getElementsByClassName('carrito-items')[0];
   while (carritoItems.hasChildNodes()) {
     carritoItems.removeChild(carritoItems.firstChild);
