@@ -9,45 +9,55 @@
         <link rel="stylesheet" href="css/style_p.css">
         <link rel="stylesheet" href="css/tablas.css">
     </head>
-    <body>
-        <header id="main-header"> 
-            <div class="logo">
-                <a href="Principal.html"> <img src="ima\Unisport.png" id="logo"></a>
-                <a href="Principal.html"> <img src="ima\titulo.png" id="titulo"></a>
-            </div>
-                <nav class="usuario-nav">
-                    <div class="usuario-menu">
-                    <a href="#" id="usuario-nombre">
-                     <img src="ima/usuario.png" id="main-header-u">
-                     <label id="nombre-usuario-label"></label>
-                    </a>
-                <ul class="submenu" id="submenu-usuario">
-                    <li><a href="#" id="cerrar-sesion">Cerrar sesión</a></li>
-                </ul>
+   <body>
+    <header id="main-header"> 
+        <div class="logo">
+            <a href="Principal.html"> <img src="ima\Unisport.png" id="logo"></a>
+            <a href="Principal.html"> <img src="ima\titulo.png" id="titulo"></a>
+        </div>
+            <nav class="usuario-nav">
+                <div class="usuario-menu">
+                 <a href="#" id="usuario-nombre">
+                  <img src="ima/usuario.png" id="main-header-u">
+                 <label id="nombre-usuario-label"></label>
+                </a>
+                    <ul class="submenu" id="submenu-usuario">
+                     <li><a href="#" id="cerrar-sesion">Cerrar sesión</a></li>
+                    </ul>
             </div>
         </nav>
+       </header>
+     <!--Menu -->
+     <nav class="navegacion">
+        <ul class="menu">
+        <li> <a href="vendedorI.html"> Inicio </a></li>
+         <li> <a href="AgregarP.html"> Agregar Productos </a></li>
+         <li> <a href="producR.html"> Productos</a></li>
+    </ul>
+ </nav>
+ <br>
+        <h1 class="t_Compra">C O M P R A</h1>
 
-           </header>
-  
-            <h1 class="t_Compra"> C O M P R A </h1>
-        <table>
-                <tr class="text_T">
-                    <td>Nombre Producto</td>
-                    <td>Precio</td>
-                    <td>Cantidad</td>
-                    <td>Total</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+  <table id="tabla-compra">
+    <thead>
+      <tr class="text_T">
+        <th>Nombre Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total c/producto</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-        </table>
-            <button class="B_Compra"> Finalizar compra </button>
-     
-    </body>
+  <h2>Total:</h2>
+  <input type="text" name="total" id="total" readonly>
+
+  <button class="B_Compra" onclick="finalizarCompra()">Finalizar compra</button>
+
+  <script src="js/compra.js"></script>
+
+</body>
     <!--::::Pie de Pagina::::::-->
     <footer class="pie-pagina">
         <div class="grupo-1">
