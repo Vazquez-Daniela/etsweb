@@ -51,6 +51,10 @@ function hacerVisibleCarrito() {
 
 function agregarItemAlCarrito(titulo, precio, imagenSrc, cantidad = 1, guardar = true) {
   const itemsCarrito = document.querySelector('.carrito-items');
+if (!itemsCarrito) {
+  console.warn('No se encontró .carrito-items en el DOM.');
+  return;
+}
   const nombresItems = itemsCarrito.getElementsByClassName('carrito-item-titulo');
   for (let i = 0; i < nombresItems.length; i++) {
     if (nombresItems[i].innerText === titulo) {
