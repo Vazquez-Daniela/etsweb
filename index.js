@@ -319,16 +319,32 @@ app.get('/mis-productos/:vendedor', async (req, res) => {
  * Modificar Productos
  */
 app.post('/editar-producto/:id', async (req, res) => {
-  const { nombre, precio, descripcion, categoria } = req.body;
-  const client = new MongoClient(mongoUri);
-  await client.connect();
-  const db = client.db(dbName);
-  await db.collection('productos').updateOne(
-    { _id: new ObjectId(req.params.id) },
-    { $set: { nombre, precio: parseFloat(precio), descripcion, categoria } }
-  );
-  await client.close();
-  res.sendStatus(200);
+  const { nombre, precio, descripcion, categoria, cantidad } = req.body;
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+
+    await db.collection('productos').updateOne(
+      { _id: new ObjectId(req.params.id) },
+      {
+        $set: {
+          nombre,
+          precio: parseFloat(precio),
+          descripcion,
+          categoria,
+          cantidad: parseInt(cantidad)  
+        }
+      }
+    );
+
+    await client.close();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al editar producto:", error);
+    res.status(500).send("Error al editar");
+  }
 });
 
 /**

@@ -14,7 +14,7 @@
              
               <td>${p.nombre}</td>
               <td>$${p.precio}</td>
-              <td>$${p.cantidad}</td>
+              <td>${p.cantidad}</td>
               <td>${p.descripcion}</td>
               <td>${p.categoria}</td>
             <td><img src="/imagen/${p._id}" alt="imagen"></td>
@@ -50,7 +50,7 @@
       const nuevaDesc = prompt("Nueva descripción:", descripcion);
       const nuevaCat = prompt("Nueva categoría:", categoria);
 
-      if (nuevoNombre && nuevoPrecio &&nuevacantidad && nuevaDesc && nuevaCat) {
+      if (nuevoNombre && nuevoPrecio && nuevacantidad && nuevaDesc && nuevaCat) {
         fetch(`/editar-producto/${id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
