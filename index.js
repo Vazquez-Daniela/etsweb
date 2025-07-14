@@ -292,6 +292,74 @@ app.get('/productos/mujer', async (req, res) => {
   }
 });
 
+/**
+ * 
+ * OPERACIONES PARA MODIFICAR, ELIMINAR Y MOSTRAR LOS PRODUCTOS REGISTRADOS
+ * 
+ */
+
+/**
+ * Mostrar poductos
+ */
+app.get('/mis-productos/:vendedor', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    const productos = await db.collection('productos').find({ proveedor: req.params.vendedor }).toArray();
+    await client.close();
+    res.json(productos);
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    res.status(500).send("Error del servidor");
+  }
+});
+
+/**
+ * Modificar Productos
+ */
+app.post('/editar-producto/:id', async (req, res) => {
+  const { nombre, precio, descripcion, categoria } = req.body;
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    await db.collection('productos').updateOne(
+      { _id: new ObjectId(req.params.id) },
+      {
+        $set: {
+          nombre,
+          precio: parseFloat(precio),
+          descripcion,
+          categoria
+        }
+      }
+    );
+    await client.close();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al editar producto:", error);
+    res.status(500).send("Error al editar");
+  }
+});
+
+/**
+ * Eliminar Producto
+ */
+app.delete('/eliminar-producto/:id', async (req, res) => {
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+    await db.collection('productos').deleteOne({ _id: new ObjectId(req.params.id) });
+    await client.close();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al eliminar producto:", error);
+    res.status(500).send("Error al eliminar");
+  }
+});
 
 
 app.listen(3000, () => {

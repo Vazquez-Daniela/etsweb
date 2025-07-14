@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main_AP.css">
+</head>
+<body>
+    <header id="main-header"> 
+        <div class="logo">
+            <a href="Principal.html"> <img src="ima\Unisport.png" id="logo"></a>
+            <a href="Principal.html"> <img src="ima\titulo.png" id="titulo"></a>
+        </div>
+            <nav class="usuario-nav">
+                <div class="usuario-menu">
+                 <a href="#" id="usuario-nombre">
+                  <img src="ima/usuario.png" id="main-header-u">
+                 <label id="nombre-usuario-label"></label>
+                </a>
+                    <ul class="submenu" id="submenu-usuario">
+                     <li><a href="#" id="cerrar-sesion">Cerrar sesión</a></li>
+                    </ul>
+            </div>
+        </nav>
+       </header>
+     <!--Menu -->
+     <nav class="navegacion">
+        <ul class="menu">
+         <li> <a href="#"> Inicio </a></li>
+         <li> <a href="#"> Agregar Productos </a></li>
+         <li> <a href="#"> Productos Registrados</a></li>
+    </ul>
+ </nav>
+ <br>
+        <h2>Mis Productos Registrados</h2>
+        <ul id="lista-productos"></ul>
+
+
+
+        <script src="js/proRegis.js"></script>
+        <script src="js/nameusu.js"></script> <!--Visualizar el nombre a lado de la imagen-->
+       <!-- <script src="js/validarP.js" defer></script> Subir los productos a la BD-->
+        <!--<script src="js/Gvendedor.js"></script> Guardar el nombre del usuario con sesion activa que quiere agregar producto.-->
+</body>
+
+    
+</html>
