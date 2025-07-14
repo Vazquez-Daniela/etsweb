@@ -19,7 +19,7 @@
               <td>${p.categoria}</td>
             <td><img src="/imagen/${p._id}" alt="imagen"></td>
               <td>
-                <button onclick="editarProducto('${p._id}', '${p.nombre}', ${p.precio}, '${p.descripcion}', '${p.categoria}')">Editar</button>
+                <button onclick="editarProducto('${p._id}', '${p.nombre}', ${p.precio}, ${p.cantidad},'${p.descripcion}', '${p.categoria}')">Editar</button>
                 <button onclick="eliminarProducto('${p._id}')">Eliminar</button>
               </td>
             `;
