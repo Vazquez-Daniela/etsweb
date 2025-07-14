@@ -1,4 +1,4 @@
-// carrito.js (versión con localStorage integrado)
+// carrito.js (corregido con redirección a Compra.html y guardado antes de comprar)
 
 var carritoVisible = false;
 
@@ -17,11 +17,13 @@ function ready() {
     }
   });
 
-  document.getElementsByClassName('btn-pagar')[0]?.addEventListener('click', pagarClicked);
+  document.querySelector('.btn-pagar')?.addEventListener('click', () => {
+    guardarCarritoEnLocalStorage();
+    window.location.href = 'Compra.html';
+  });
 }
 
 function pagarClicked() {
-  //alert("Gracias por la compra");
   const carritoItems = document.getElementsByClassName('carrito-items')[0];
   while (carritoItems.hasChildNodes()) {
     carritoItems.removeChild(carritoItems.firstChild);
@@ -132,9 +134,9 @@ function actualizarTotalCarrito() {
 
   total = Math.round(total * 100) / 100;
 
-  const totalFormateado = total.toLocaleString('en-US', {
+  const totalFormateado = total.toLocaleString('en-MX', {
     style: 'currency',
-    currency: 'USD'
+    currency: 'MXN'
   });
 
   document.querySelector('.carrito-precio-total').innerText = totalFormateado;
