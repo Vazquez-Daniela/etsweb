@@ -320,45 +320,27 @@ app.get('/mis-productos/:vendedor', async (req, res) => {
  */
 app.post('/editar-producto/:id', async (req, res) => {
   const { nombre, precio, descripcion, categoria } = req.body;
-
-  try {
-    const client = new MongoClient(mongoUri);
-    await client.connect();
-    const db = client.db(dbName);
-    await db.collection('productos').updateOne(
-      { _id: new ObjectId(req.params.id) },
-      {
-        $set: {
-          nombre,
-          precio: parseFloat(precio),
-          descripcion,
-          categoria
-        }
-      }
-    );
-    await client.close();
-    res.sendStatus(200);
-  } catch (error) {
-    console.error("Error al editar producto:", error);
-    res.status(500).send("Error al editar");
-  }
+  const client = new MongoClient(mongoUri);
+  await client.connect();
+  const db = client.db(dbName);
+  await db.collection('productos').updateOne(
+    { _id: new ObjectId(req.params.id) },
+    { $set: { nombre, precio: parseFloat(precio), descripcion, categoria } }
+  );
+  await client.close();
+  res.sendStatus(200);
 });
 
 /**
  * Eliminar Producto
  */
 app.delete('/eliminar-producto/:id', async (req, res) => {
-  try {
-    const client = new MongoClient(mongoUri);
-    await client.connect();
-    const db = client.db(dbName);
-    await db.collection('productos').deleteOne({ _id: new ObjectId(req.params.id) });
-    await client.close();
-    res.sendStatus(200);
-  } catch (error) {
-    console.error("Error al eliminar producto:", error);
-    res.status(500).send("Error al eliminar");
-  }
+  const client = new MongoClient(mongoUri);
+  await client.connect();
+  const db = client.db(dbName);
+  await db.collection('productos').deleteOne({ _id: new ObjectId(req.params.id) });
+  await client.close();
+  res.sendStatus(200);
 });
 
 
