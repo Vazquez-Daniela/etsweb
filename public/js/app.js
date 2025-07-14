@@ -1,4 +1,3 @@
-// carrito.js (corregido con redirección a Compra.html y guardado antes de comprar)
 
 var carritoVisible = false;
 

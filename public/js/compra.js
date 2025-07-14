@@ -1,4 +1,4 @@
-// Compra.js – usado solo en Compra.html
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const carrito = JSON.parse(localStorage.getItem('carrito')) || [];

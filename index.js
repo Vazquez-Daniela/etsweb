@@ -374,14 +374,14 @@ app.delete('/eliminar-producto/:id', async (req, res) => {
  * 
  */
 app.post('/guardar-compra', async (req, res) => {
- const { fecha, comprador, productos, total } = req.body;
+  const { fecha, comprador, productos, total } = req.body;
 
   try {
     const client = new MongoClient(mongoUri);
     await client.connect();
     const db = client.db(dbName);
 
-    // Guardar la compra
+    // 1. Insertar la compra
     await db.collection('compras').insertOne({
       fecha: new Date(fecha),
       comprador,
@@ -389,11 +389,13 @@ app.post('/guardar-compra', async (req, res) => {
       total
     });
 
-    // Actualizar inventario y marcar agotado si es necesario
+    // 2. Por cada producto, restar cantidad y actualizar agotado si es necesario
     for (const p of productos) {
-      const producto = await db.collection('productos').findOne({ nombre: p.nombre });
-      if (producto) {
-        const nuevaCantidad = producto.cantidad - p.cantidad;
+      const productoActual = await db.collection('productos').findOne({ nombre: p.nombre });
+
+      if (productoActual) {
+        const nuevaCantidad = productoActual.cantidad - p.cantidad;
+
         await db.collection('productos').updateOne(
           { nombre: p.nombre },
           {
@@ -409,8 +411,8 @@ app.post('/guardar-compra', async (req, res) => {
     await client.close();
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error en /guardar-compra:", error);
-    res.status(500).send("Error al guardar la compra");
+    console.error("Error al guardar compra o actualizar inventario:", error);
+    res.status(500).send("Error al procesar la compra");
   }
 });
 /**
