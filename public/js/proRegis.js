@@ -11,11 +11,13 @@
             const tr = document.createElement('tr');
 
             tr.innerHTML = `
-              <td><img src="/imagen/${p._id}" alt="imagen"></td>
+             
               <td>${p.nombre}</td>
               <td>$${p.precio}</td>
+              <td>$${p.cantidad}</td>
               <td>${p.descripcion}</td>
               <td>${p.categoria}</td>
+            <td><img src="/imagen/${p._id}" alt="imagen"></td>
               <td>
                 <button onclick="editarProducto('${p._id}', '${p.nombre}', ${p.precio}, '${p.descripcion}', '${p.categoria}')">Editar</button>
                 <button onclick="eliminarProducto('${p._id}')">Eliminar</button>
@@ -41,19 +43,21 @@
       }
     }
 
-    function editarProducto(id, nombre, precio, descripcion, categoria) {
+    function editarProducto(id, nombre, precio, cantidad, descripcion, categoria) {
       const nuevoNombre = prompt("Nuevo nombre:", nombre);
       const nuevoPrecio = prompt("Nuevo precio:", precio);
+      const nuevacantidad = prompt("Nueva cantidad:",cantidad);
       const nuevaDesc = prompt("Nueva descripción:", descripcion);
       const nuevaCat = prompt("Nueva categoría:", categoria);
 
-      if (nuevoNombre && nuevoPrecio && nuevaDesc && nuevaCat) {
+      if (nuevoNombre && nuevoPrecio &&nuevacantidad && nuevaDesc && nuevaCat) {
         fetch(`/editar-producto/${id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             nombre: nuevoNombre,
             precio: parseFloat(nuevoPrecio),
+            cantidad: parseInt(nuevacantidad),
             descripcion: nuevaDesc,
             categoria: nuevaCat
           })
