@@ -149,7 +149,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public')); // Para servir imágenes si lo necesitas
+app.use(express.static('public')); 
 
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
   const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
