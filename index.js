@@ -246,31 +246,37 @@ app.get('/productos/kids', async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    const productos = await db.collection('productos').find({ categoria: "Kids" }).toArray();
-    await client.close();
+    const productos = await db.collection('productos').find({
+      categoria: 'Kids',
+      agotado: { $ne: true } // ❗ excluir productos agotados
+    }).toArray();
 
+    await client.close();
     res.json(productos);
   } catch (error) {
-    console.error('Error al cargar productos Kids:', error);
-    res.status(500).json({ error: 'Error al obtener productos' });
+    console.error('Error al obtener productos:', error);
+    res.status(500).send('Error al obtener productos');
   }
 });
 /**
  * LLenar la pagina automaticamente de Hombre
  */
 app.get('/productos/hombre', async (req, res) => {
-  try {
+ try {
     const client = new MongoClient(mongoUri);
     await client.connect();
     const db = client.db(dbName);
 
-    const productos = await db.collection('productos').find({ categoria: "Hombre" }).toArray();
-    await client.close();
+    const productos = await db.collection('productos').find({
+      categoria: 'Hombre',
+      agotado: { $ne: true } // ❗ excluir productos agotados
+    }).toArray();
 
+    await client.close();
     res.json(productos);
   } catch (error) {
-    console.error('Error al cargar productos Kids:', error);
-    res.status(500).json({ error: 'Error al obtener productos' });
+    console.error('Error al obtener productos:', error);
+    res.status(500).send('Error al obtener productos');
   }
 });
 /**
@@ -282,13 +288,16 @@ app.get('/productos/mujer', async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    const productos = await db.collection('productos').find({ categoria: "Mujer" }).toArray();
-    await client.close();
+    const productos = await db.collection('productos').find({
+      categoria: 'Mujer',
+      agotado: { $ne: true } // ❗ excluir productos agotados
+    }).toArray();
 
+    await client.close();
     res.json(productos);
   } catch (error) {
-    console.error('Error al cargar productos Kids:', error);
-    res.status(500).json({ error: 'Error al obtener productos' });
+    console.error('Error al obtener productos:', error);
+    res.status(500).send('Error al obtener productos');
   }
 });
 
@@ -359,6 +368,53 @@ app.delete('/eliminar-producto/:id', async (req, res) => {
   res.sendStatus(200);
 });
 
+/**
+ * 
+ * Guardar compra 
+ * 
+ */
+app.post('/guardar-compra', async (req, res) => {
+  const { fecha, comprador, productos, total } = req.body;
+
+  try {
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+    const db = client.db(dbName);
+
+    // 1. Insertar la compra
+    await db.collection('compras').insertOne({
+      fecha: new Date(fecha),
+      comprador,
+      productos,
+      total
+    });
+
+    // 2. Por cada producto, restar cantidad y actualizar agotado si es necesario
+    for (const p of productos) {
+      const productoActual = await db.collection('productos').findOne({ nombre: p.nombre });
+
+      if (productoActual) {
+        const nuevaCantidad = productoActual.cantidad - p.cantidad;
+
+        await db.collection('productos').updateOne(
+          { nombre: p.nombre },
+          {
+            $set: {
+              cantidad: nuevaCantidad,
+              agotado: nuevaCantidad <= 0
+            }
+          }
+        );
+      }
+    }
+
+    await client.close();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al guardar compra o actualizar inventario:", error);
+    res.status(500).send("Error al procesar la compra");
+  }
+});
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
