@@ -99,7 +99,7 @@
     display: block;
     font-weight: bold;
     margin-bottom: 10px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 .carrito .carrito-item .selector-cantidad{
     display: inline-block;
