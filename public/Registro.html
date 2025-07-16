@@ -19,7 +19,7 @@
             
             <section class="registro">
                 <h3> Registro </h3>
-                <form action="/guardar" method="POST">
+                <form id="registroForm" action="/guardar" method="POST">
 
                     <label> Nombre </label>
                     <input class="controles" type="text" name="name" required>
@@ -37,7 +37,9 @@
                             <option value="cliente">Cliente</option>
                             <option value="vendedor">Vendedor</option>
                     </select>
-                    <input class="botones" type="submit" value="Enviar">
+                     <span id="message"></span>
+                    <button type="submit" class="botones">Registrarse</button>
+                    <!--<input class="botones" type="submit" value="Enviar">-->
                 </section>   
             </form>
            <script  src="js/ingresar.js"></script> 

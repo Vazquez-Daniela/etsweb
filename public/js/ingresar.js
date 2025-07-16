@@ -1,4 +1,42 @@
+const form = document.getElementById('registroForm');
 const passwordInput = document.getElementById('password');
+const message = document.getElementById('message');
+
+form.addEventListener('submit', function (e) {
+  const password = passwordInput.value;
+
+  const hasLowercase = /[a-z]/.test(password);
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecialChar = /[$@#%&/*]/.test(password);
+  const hasMinLength = password.length >= 8;
+
+  // Mostrar nivel de seguridad
+  let strength = 0;
+  if (hasLowercase) strength++;
+  if (hasUppercase) strength++;
+  if (hasNumber) strength++;
+  if (hasSpecialChar) strength++;
+  if (hasMinLength) strength++;
+
+  const strengthMessages = [
+    { text: 'Muy Débil', color: '#ff0000' },
+    { text: 'Débil', color: '#ff6C00' },
+    { text: 'Media', color: '#ffe000' },
+    { text: 'Fuerte', color: '#20c500' },
+    { text: 'Muy Fuerte', color: '#157e00' }
+  ];
+
+  message.textContent = strengthMessages[Math.max(0, strength - 1)].text;
+  message.style.color = strengthMessages[Math.max(0, strength - 1)].color;
+
+  // Si no cumple todos los requisitos, evitar envío y mostrar alerta
+  if (!hasLowercase || !hasUppercase || !hasNumber || !hasSpecialChar || !hasMinLength) {
+    e.preventDefault(); // Detener envío del formulario
+    alert("La contraseña debe contener:\n- Mayúsculas\n- Minúsculas\n- Números\n- Caracteres especiales ($@#%&/*)\n- Mínimo 8 caracteres");
+  }
+});
+/*const passwordInput = document.getElementById('password');
 const message = document.getElementById('message') ;
 
 passwordInput.addEventListener("input",() => {
@@ -52,4 +90,4 @@ passwordInput.addEventListener("input",() => {
                     message.style.color='#157e00';
                 break;
         }
-});
+});*/
