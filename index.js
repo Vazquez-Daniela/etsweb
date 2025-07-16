@@ -53,9 +53,13 @@ const datos = {
 
         await collection.insertOne(datos);
         client.close();
-        /**Redireccionarlo a la pagina de login */
-       alert("Usuario registrado con exito!");
-       res.redirect('/Ingresar.html');
+        console.log("usuario guardado con éxito en MongoDB.");
+        res.send(`
+      <script>
+        alert('Registrado correctamente');
+        window.location.href = '/Ingresar.html';
+      </script>
+    `);
     } catch (error) {
         console.error('Error al guardar:', error);
         res.status(500).send('Error al guardar en la base de datos.');
