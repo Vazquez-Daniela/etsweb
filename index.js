@@ -51,19 +51,33 @@ const datos = {
         const db = client.db(dbName);
         const collection = db.collection('usuarios');
 
-        await collection.insertOne(datos);
-        client.close();
-        console.log("usuario guardado con éxito en MongoDB.");
-        res.send(`
+       const usuarioExistente = await collection.findOne({ email: datos.email });
+
+    if (usuarioExistente) {
+      //Verifica que el email no exista y asi evitar duplicado de email.
+      res.send(`
+        <script>
+          alert('El correo electrónico ya está registrado.');
+          window.location.href = '/Registro.html';
+        </script>
+      `);
+      return;
+    }
+
+    await collection.insertOne(datos);
+    client.close();
+
+    console.log("Usuario guardado con éxito en MongoDB.");
+    res.send(`
       <script>
         alert('Registrado correctamente');
         window.location.href = '/Ingresar.html';
       </script>
     `);
-    } catch (error) {
-        console.error('Error al guardar:', error);
-        res.status(500).send('Error al guardar en la base de datos.');
-    }
+  } catch (error) {
+    console.error('Error al guardar:', error);
+    res.status(500).send('Error al guardar en la base de datos.');
+  }
 });
 /**
  * Iniciar sesion 
