@@ -199,7 +199,8 @@ app.post('/guardarP', upload.single('imagen'), async (req, res) => {
     descripcion: des,
     proveedor: Proveedor,  // Asegúrate que la clave es Proveedor, no proveedor
     categoria: categoria.charAt(0).toUpperCase() + categoria.slice(1),
-    imagen: imagenData
+    imagen: imagenData,
+    agotado: parseInt(Cantidad) <= 0
   };
 
   try {
