@@ -75,7 +75,6 @@ if (!itemsCarrito) {
           <i class="fa-solid fa-plus sumar-cantidad"></i>
         </div>
         <span class="carrito-item-precio">${precio}</span>
-         ${prod.agotado ? '<span class="agotado-label">AGOTADO</span>' : ''}
       </div>
       <button class="btn-eliminar"><i class="fa-solid fa-trash"></i></button>
     </div>`;
