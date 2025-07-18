@@ -85,8 +85,7 @@ const datos = {
 
 // Middleware necesario ANTES de cualquier ruta que use req.session
 app.use(session({
-  secret: 'clave-secreta', // pon algo más seguro en producción
-  resave: false,
+  secret: 'clave-secreta', 
   saveUninitialized: true
 }));
 
@@ -172,11 +171,11 @@ app.use(express.static('public'));
 app.post('/guardarP', upload.single('imagen'), async (req, res) => {
   const { nombreP, Precio, Cantidad, des, Proveedor, categoria } = req.body;
 
-  // Logs para depuración
+ 
   console.log("Datos del formulario recibidos:", req.body);
   console.log("Proveedor recibido:", Proveedor);
 
-  // Validar campos obligatorios
+  
   if (!nombreP || !Precio || !Cantidad || !des || !Proveedor || !categoria) {
     return res.status(400).send("Todos los campos son obligatorios.");
   }
