@@ -15,25 +15,25 @@
     const imagenInput = document.getElementById('imagen');
     const proveedor = localStorage.getItem('usuario');
 
-    // Verifica que el usuario esté autenticado
+   
     if (!proveedor) {
       alert('No se detectó el usuario autenticado.');
       e.preventDefault();
       return;
     }
 
-    // Asigna el proveedor al campo oculto
+    // Asigna el nombre del usuario al campo oculto
     document.getElementById('Proveedor').value = proveedor;
     console.log("Proveedor confirmado al enviar:", proveedor);
 
-    // Validación de campos obligatorios
+  
     if (!nombre || !precio || !cantidad || !descripcion || !categoria || !imagenInput.files[0]) {
       alert('Todos los campos son obligatorios.');
       e.preventDefault();
       return;
     }
 
-    // Validación de tipo de datos
+    
     if (isNaN(precio) || parseFloat(precio) <= 0) {
       alert('El precio debe ser un número positivo.');
       e.preventDefault();
@@ -46,7 +46,6 @@
       return;
     }
 
-    // Todo válido, se permite enviar el formulario
     console.log("Formulario listo para enviar.");
   });
 });
